@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('query') {
+            steps {
+                echo 'Connect to DB Instance and run query'
+                sh(script:'''
+                set heading off feedback off verify off
+                sqlplus -s "/ as sysdba" <<EOF
+                select * from hr.countries
+                exit
+                EOF'
+                ''')
+            }
+        }
+    }
+}
